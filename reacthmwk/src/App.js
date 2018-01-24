@@ -1,19 +1,40 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import card from "./components/cards";
+import wrapper from "./components/wrapper";
+import title from "./components/title";
+import cards from "./cards.json";
+import "./App.css";
 
 class App extends Component {
+  
+  state = {
+    cards
+  };
+
+  removeCard = id => {
+  
+    const cards = this.state.cards.filter(card => card.id !== id);
+    
+    this.setState({ cards });
+  };
+
+  
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <wrapper>
+        <title>Cards List</title>
+        {this.state.cards.map(card => (
+          <cards
+            removeCard={this.removeCard}
+            id={card.id}
+            key={card.id}
+            name={card.name}
+            image={card.image}
+            occupation={card.occupation}
+            location={card.location}
+          />
+        ))}
+      </wrapper>
     );
   }
 }
